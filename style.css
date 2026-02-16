@@ -1,0 +1,197 @@
+* {
+  box-sizing: border-box;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f0eb;
+  color: #2c2c2c;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1rem 2rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.top-stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(
+    115deg,
+    #c8102e 0% 2%,
+    #fff 2% 3%,
+    #2563eb 3% 14%,
+    #0d9488 14% 18%,
+    #006747 18% 22%,
+    #fff 22% 24%,
+    #ffc72c 24% 42%,
+    #ff6600 42% 48%,
+    #fff 48% 50%,
+    #7c3aed 50% 55%,
+    #1e40af 55% 68%,
+    #c41e3a 68% 75%,
+    #fff 75% 82%,
+    #006bb6 82% 88%,
+    #84cc16 88% 92%,
+    #c8102e 92% 94%,
+    #ffc72c 94% 96%,
+    #006747 96% 100%
+  );
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.title-graphic {
+  display: inline-flex;
+  width: 0.75rem;
+  height: 0.75rem;
+  color: #d97706;
+  flex-shrink: 0;
+}
+
+.title-graphic svg {
+  width: 100%;
+  height: 100%;
+}
+
+.title-graphic--star {
+  color: #f59e0b;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+  max-width: 720px;
+}
+
+h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+section {
+  flex: 0 0 320px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+/* Team A – blue accent */
+section:nth-of-type(1) {
+  border-top: 4px solid #2563eb;
+}
+
+section:nth-of-type(1) h2 {
+  color: #1d4ed8;
+}
+
+/* Team B – amber accent */
+section:nth-of-type(2) {
+  border-top: 4px solid #d97706;
+}
+
+section:nth-of-type(2) h2 {
+  color: #b45309;
+}
+
+h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: #555;
+}
+
+.score {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #2c2c2c;
+}
+
+section .score + button,
+section button + button {
+  margin-left: 0.5rem;
+}
+
+button {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button[onclick*="increment"] {
+  color: #fff;
+}
+
+section:nth-of-type(1) button[onclick*="increment"] {
+  background: #2563eb;
+}
+
+section:nth-of-type(1) button[onclick*="increment"]:hover {
+  background: #1d4ed8;
+}
+
+section:nth-of-type(2) button[onclick*="increment"] {
+  background: #d97706;
+}
+
+section:nth-of-type(2) button[onclick*="increment"]:hover {
+  background: #b45309;
+}
+
+button[onclick*="decrement"] {
+  background: #e8e4df;
+  color: #2c2c2c;
+}
+
+button[onclick*="decrement"]:hover {
+  background: #ddd8d1;
+}
