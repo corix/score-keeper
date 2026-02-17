@@ -21,9 +21,22 @@
   </button>
   <aside id="sidebar" class="sidebar" role="dialog" aria-label="Teams">
     <h3 class="sidebar-title">Teams</h3>
-    <div id="sidebar-teams" class="sidebar-teams"></div>
-    <button type="button" id="sidebar-add-team" class="sidebar-add-team" aria-label="Add team">+ Add team</button>
+    <div class="sidebar-scroll">
+      <div id="sidebar-teams" class="sidebar-teams"></div>
+      <button type="button" id="sidebar-add-team" class="sidebar-add-team" aria-label="Add team">+ Add team</button>
+    </div>
+    <button type="button" id="sidebar-new-game" class="sidebar-new-game" aria-label="New game">New Game</button>
   </aside>
+  <div id="new-game-confirm-popover" class="delete-confirm-popover" role="dialog" aria-labelledby="new-game-confirm-message" aria-modal="true" hidden>
+    <p id="new-game-confirm-message" class="delete-confirm-message">Delete all teams and start over?</p>
+    <div class="delete-confirm-actions">
+      <button type="button" class="new-game-confirm-cancel">Cancel</button>
+      <button type="button" class="new-game-confirm-ok">New Game</button>
+    </div>
+  </div>
+  <div id="delete-confirm-popover" class="delete-confirm-popover" role="dialog" aria-labelledby="delete-confirm-message" aria-modal="true" hidden>
+    <p id="delete-confirm-message" class="delete-confirm-message">Double-click to delete</p>
+  </div>
   <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden>
     <span class="toast-message">Team name updated</span>
     <span class="toast-icon" aria-hidden="true">

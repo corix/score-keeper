@@ -11,6 +11,22 @@
   --team-2-color-dark: #0f766e;
   --team-3-color: #7c3aed;
   --team-3-color-dark: #6d28d9;
+  --team-4-color: #22c55e;
+  --team-4-color-dark: #16a34a;
+  --team-5-color: #06b6d4;
+  --team-5-color-dark: #0891b2;
+  --team-6-color: #f59e0b;
+  --team-6-color-dark: #d97706;
+  --team-7-color: #ef4444;
+  --team-7-color-dark: #dc2626;
+  --team-8-color: #8b5cf6;
+  --team-8-color-dark: #7c3aed;
+  --team-9-color: #ec4899;
+  --team-9-color-dark: #db2777;
+  --team-10-color: #14b8a6;
+  --team-10-color-dark: #0d9488;
+  --team-11-color: #f97316;
+  --team-11-color-dark: #ea580c;
 }
 
 @keyframes fadeIn {
@@ -169,12 +185,15 @@ body {
   bottom: 0;
   width: 240px;
   z-index: 99;
+  display: flex;
+  flex-direction: column;
   background: #f8f6f4;
   border-right: 1px solid #e5e0db;
   padding: calc(5.5rem - 10px) 1rem 1.5rem 1rem;
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
   transform: translateX(-100%);
   transition: transform 0.25s ease;
+  overflow: hidden;
 }
 
 .sidebar.sidebar--open {
@@ -182,10 +201,18 @@ body {
 }
 
 .sidebar-title {
+  flex-shrink: 0;
   font-size: 0.9rem;
   font-weight: 700;
   margin: 0 0 1rem 0;
   color: #2c2c2c;
+}
+
+.sidebar-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .sidebar-teams {
@@ -310,6 +337,32 @@ body {
   pointer-events: none;
 }
 
+.sidebar-remove-team {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: none;
+  color: #9ca3af;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sidebar-remove-team:hover {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+}
+
+.sidebar-remove-team svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  pointer-events: none;
+}
+
 .sidebar-accordion-panel {
   max-height: 0;
   overflow: hidden;
@@ -352,6 +405,26 @@ body {
   color: #2c2c2c;
 }
 
+.sidebar-new-game {
+  flex-shrink: 0;
+  width: 100%;
+  margin-top: auto;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+  background: #fff;
+  border: 1px solid #c4bfb8;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sidebar-new-game:hover {
+  background: #f0eeeb;
+  border-color: #a0a0a0;
+  color: #2c2c2c;
+}
+
 .sidebar-label {
   display: block;
   font-size: 0.75rem;
@@ -367,6 +440,7 @@ body {
 }
 
 .sidebar-swatch {
+  position: relative;
   width: 28px;
   height: 28px;
   padding: 0;
@@ -380,6 +454,40 @@ body {
 .sidebar-swatch:hover {
   transform: scale(1.08);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-swatch--used,
+.sidebar-swatch:disabled {
+  cursor: not-allowed;
+}
+
+.sidebar-swatch--used::after,
+.sidebar-swatch:disabled::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.65);
+  pointer-events: none;
+}
+
+.sidebar-swatch--used:hover,
+.sidebar-swatch:disabled:hover {
+  transform: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-swatch-x {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .sidebar-swatch[aria-pressed="true"] {
@@ -447,7 +555,7 @@ section {
   text-align: center;
 }
 
-/* Team accents by position (0–3) */
+/* Team accents by position (0–11) */
 section[data-position="0"] {
   background: linear-gradient(to bottom, var(--team-0-color) 6px, #fff 6px);
 }
@@ -464,6 +572,38 @@ section[data-position="3"] {
   background: linear-gradient(to bottom, var(--team-3-color) 6px, #fff 6px);
 }
 section[data-position="3"] h2 { color: var(--team-3-color-dark); }
+section[data-position="4"] {
+  background: linear-gradient(to bottom, var(--team-4-color) 6px, #fff 6px);
+}
+section[data-position="4"] h2 { color: var(--team-4-color-dark); }
+section[data-position="5"] {
+  background: linear-gradient(to bottom, var(--team-5-color) 6px, #fff 6px);
+}
+section[data-position="5"] h2 { color: var(--team-5-color-dark); }
+section[data-position="6"] {
+  background: linear-gradient(to bottom, var(--team-6-color) 6px, #fff 6px);
+}
+section[data-position="6"] h2 { color: var(--team-6-color-dark); }
+section[data-position="7"] {
+  background: linear-gradient(to bottom, var(--team-7-color) 6px, #fff 6px);
+}
+section[data-position="7"] h2 { color: var(--team-7-color-dark); }
+section[data-position="8"] {
+  background: linear-gradient(to bottom, var(--team-8-color) 6px, #fff 6px);
+}
+section[data-position="8"] h2 { color: var(--team-8-color-dark); }
+section[data-position="9"] {
+  background: linear-gradient(to bottom, var(--team-9-color) 6px, #fff 6px);
+}
+section[data-position="9"] h2 { color: var(--team-9-color-dark); }
+section[data-position="10"] {
+  background: linear-gradient(to bottom, var(--team-10-color) 6px, #fff 6px);
+}
+section[data-position="10"] h2 { color: var(--team-10-color-dark); }
+section[data-position="11"] {
+  background: linear-gradient(to bottom, var(--team-11-color) 6px, #fff 6px);
+}
+section[data-position="11"] h2 { color: var(--team-11-color-dark); }
 
 h2 {
   font-size: 1.1rem;
@@ -562,6 +702,54 @@ section[data-position="3"] button[onclick*="increment"] {
 section[data-position="3"] button[onclick*="increment"]:hover {
   background: var(--team-3-color-dark);
 }
+section[data-position="4"] button[onclick*="increment"] {
+  background: var(--team-4-color);
+}
+section[data-position="4"] button[onclick*="increment"]:hover {
+  background: var(--team-4-color-dark);
+}
+section[data-position="5"] button[onclick*="increment"] {
+  background: var(--team-5-color);
+}
+section[data-position="5"] button[onclick*="increment"]:hover {
+  background: var(--team-5-color-dark);
+}
+section[data-position="6"] button[onclick*="increment"] {
+  background: var(--team-6-color);
+}
+section[data-position="6"] button[onclick*="increment"]:hover {
+  background: var(--team-6-color-dark);
+}
+section[data-position="7"] button[onclick*="increment"] {
+  background: var(--team-7-color);
+}
+section[data-position="7"] button[onclick*="increment"]:hover {
+  background: var(--team-7-color-dark);
+}
+section[data-position="8"] button[onclick*="increment"] {
+  background: var(--team-8-color);
+}
+section[data-position="8"] button[onclick*="increment"]:hover {
+  background: var(--team-8-color-dark);
+}
+section[data-position="9"] button[onclick*="increment"] {
+  background: var(--team-9-color);
+}
+section[data-position="9"] button[onclick*="increment"]:hover {
+  background: var(--team-9-color-dark);
+}
+section[data-position="10"] button[onclick*="increment"] {
+  background: var(--team-10-color);
+}
+section[data-position="10"] button[onclick*="increment"]:hover {
+  background: var(--team-10-color-dark);
+}
+section[data-position="11"] button[onclick*="increment"] {
+  background: var(--team-11-color);
+}
+section[data-position="11"] button[onclick*="increment"]:hover {
+  background: var(--team-11-color-dark);
+}
 
 button[onclick*="decrement"] {
   background: #e8e4df;
@@ -589,4 +777,63 @@ footer a {
 footer a:hover {
   color: #777;
   text-decoration: underline;
+}
+
+/* Delete-team confirmation popover */
+.delete-confirm-popover {
+  position: fixed;
+  z-index: 100;
+  min-width: 12rem;
+  max-width: 20rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1px solid #e5e0db;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.delete-confirm-popover[hidden] {
+  display: none;
+}
+
+.delete-confirm-message {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  color: #2c2c2c;
+  line-height: 1.4;
+}
+
+.delete-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.delete-confirm-cancel,
+.delete-confirm-delete {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.delete-confirm-cancel {
+  background: #f0eeeb;
+  color: #555;
+}
+
+.delete-confirm-cancel:hover {
+  background: #e5e0db;
+  color: #2c2c2c;
+}
+
+.delete-confirm-delete {
+  background: #dc2626;
+  color: #fff;
+}
+
+.delete-confirm-delete:hover {
+  background: #b91c1c;
 }
