@@ -151,7 +151,8 @@ h1 {
 section {
   flex: 0 0 320px;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e0db;
   padding: 1.5rem 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   text-align: center;
@@ -159,20 +160,20 @@ section {
 
 /* Team A – blue accent */
 section:nth-of-type(1) {
-  border-top: 4px solid #2563eb;
+  background: linear-gradient(to bottom, #2563eb 6px, #fff 6px);
 }
 
 section:nth-of-type(1) h2 {
-  color: #1d4ed8;
+  color: hsl(224, 70%, 52%);
 }
 
 /* Team B – amber accent */
 section:nth-of-type(2) {
-  border-top: 4px solid #d97706;
+  background: linear-gradient(to bottom, #d97706 6px, #fff 6px);
 }
 
 section:nth-of-type(2) h2 {
-  color: #b45309;
+  color: hsl(31, 88%, 41%);
 }
 
 h2 {
@@ -180,6 +181,13 @@ h2 {
   font-weight: 600;
   margin: 0 0 0.75rem 0;
   color: #555;
+}
+
+section h2 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
 }
 
 .team-name-hover-area {
