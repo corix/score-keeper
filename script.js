@@ -2,6 +2,7 @@ const STORAGE_KEY = 'score-keeper-scores';
 const TEAM_NAMES_STORAGE_KEY = 'score-keeper-team-names';
 const scores = { a: 0, b: 0 };
 const teamNames = { a: 'Team A', b: 'Team B' };
+let toastHideTimeoutId = null;
 
 // Returns the score display element for the given team ('a' or 'b').
 function getScoreElement(team) {
@@ -53,6 +54,29 @@ function decrementScore(team) {
     updateDisplay(team);
     saveScores();
   }
+}
+
+function showTeamNameUpdatedToast() {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  if (toastHideTimeoutId) {
+    clearTimeout(toastHideTimeoutId);
+    toastHideTimeoutId = null;
+  }
+  toast.classList.remove('toast--visible');
+  toast.classList.add('toast--entering');
+  toast.hidden = false;
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      toast.classList.add('toast--visible');
+      toast.classList.remove('toast--entering');
+    });
+  });
+  toastHideTimeoutId = setTimeout(function () {
+    toast.classList.remove('toast--visible', 'toast--entering');
+    toast.hidden = true;
+    toastHideTimeoutId = null;
+  }, 2500);
 }
 
 // Persists team names to localStorage.
@@ -131,6 +155,7 @@ function setupTeamNameEdit(team) {
     teamNames[team] = value || defaultName;
     el.textContent = teamNames[team];
     saveTeamNames();
+    showTeamNameUpdatedToast();
   });
   el.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
