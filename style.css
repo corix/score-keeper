@@ -182,10 +182,16 @@ h2 {
   color: #555;
 }
 
+.team-name-hover-area {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1rem 0.25rem 1rem;
+}
+
 .team-name-wrap {
   position: relative;
   display: inline-block;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
 }
 
 .team-name-wrap h2 {
@@ -238,7 +244,7 @@ h2[contenteditable="true"]:focus {
 .score {
   font-size: 2.5rem;
   font-weight: 700;
-  margin: 0 0 1rem 0;
+  margin: 0.5rem 0 1rem 0;
   line-height: 1;
   font-variant-numeric: tabular-nums;
   color: #2c2c2c;

@@ -127,14 +127,15 @@ function setupTeamNameEdit(team) {
       sel.removeAllRanges();
       sel.addRange(range);
     });
-    wrap.addEventListener('mouseenter', function () {
+    const hoverArea = wrap.closest('.team-name-hover-area') || wrap;
+    hoverArea.addEventListener('mouseenter', function () {
       if (hideIconTimeout) {
         clearTimeout(hideIconTimeout);
         hideIconTimeout = null;
       }
       wrap.classList.add('show-icon');
     });
-    wrap.addEventListener('mouseleave', function () {
+    hoverArea.addEventListener('mouseleave', function () {
       hideIconTimeout = setTimeout(function () {
         wrap.classList.remove('show-icon');
         hideIconTimeout = null;
@@ -152,10 +153,14 @@ function setupTeamNameEdit(team) {
   const defaultName = team === 'a' ? 'Team A' : 'Team B';
   el.addEventListener('blur', function () {
     const value = el.textContent.trim();
-    teamNames[team] = value || defaultName;
+    const newName = value || defaultName;
     el.textContent = teamNames[team];
-    saveTeamNames();
-    showTeamNameUpdatedToast();
+    if (newName !== teamNames[team]) {
+      teamNames[team] = newName;
+      el.textContent = newName;
+      saveTeamNames();
+      showTeamNameUpdatedToast();
+    }
   });
   el.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
