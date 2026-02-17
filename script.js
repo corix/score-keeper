@@ -158,11 +158,42 @@ function pickUnusedColorForTeam(teamId) {
     const key = normalizeColorKey(hex);
     return key && !used[key];
   };
-  if (tryColor(DEFAULT_COLORS[teamId])) return DEFAULT_COLORS[teamId];
   for (var i = 0; i < STRIPE_PALETTE.length; i++) {
     if (tryColor(STRIPE_PALETTE[i])) return STRIPE_PALETTE[i];
   }
-  return DEFAULT_COLORS[teamId] || STRIPE_PALETTE[0];
+  if (tryColor(DEFAULT_COLORS[teamId])) return DEFAULT_COLORS[teamId];
+  return STRIPE_PALETTE[0];
+}
+
+function hueDistance(h1, h2) {
+  var d = Math.abs(h1 - h2) % 360;
+  return d <= 180 ? d : 360 - d;
+}
+
+function pickUnusedColorComplementaryTo(teamId, referenceTeamId) {
+  const used = getUsedTeamColors(teamId);
+  const unused = [];
+  for (var i = 0; i < STRIPE_PALETTE.length; i++) {
+    var hex = STRIPE_PALETTE[i];
+    var key = normalizeColorKey(hex);
+    if (key && !used[key]) unused.push(hex);
+  }
+  if (unused.length === 0) return pickUnusedColorForTeam(teamId);
+  if (!referenceTeamId) return unused[0];
+  var refHex = teamColors[referenceTeamId] || DEFAULT_COLORS[referenceTeamId] || '';
+  if (!refHex) return unused[0];
+  var refHue = hexToHsl(refHex).h;
+  var targetHue = (refHue + 180) % 360;
+  var best = unused[0];
+  var bestDist = hueDistance(hexToHsl(best).h, targetHue);
+  for (var j = 1; j < unused.length; j++) {
+    var d = hueDistance(hexToHsl(unused[j]).h, targetHue);
+    if (d < bestDist) {
+      bestDist = d;
+      best = unused[j];
+    }
+  }
+  return best;
 }
 
 function applyTeamColors() {
@@ -579,7 +610,8 @@ function addTeam() {
   if (!next) return;
   teamOrder.push(next);
   ensureTeamData(next);
-  teamColors[next] = normalizeColorKey(pickUnusedColorForTeam(next) || '');
+  var prevTeamId = teamOrder[teamOrder.length - 2];
+  teamColors[next] = normalizeColorKey(pickUnusedColorComplementaryTo(next, prevTeamId) || '');
   saveTeamOrder();
   saveScores();
   saveTeamNames();
@@ -589,6 +621,11 @@ function addTeam() {
   applyTeamColors();
   updateSwatchDisabledStates();
   syncTeamColorSwatch(next);
+  openAccordionTeamId = next;
+  const panel = document.getElementById('sidebar-panel-' + next);
+  const toggleEl = document.querySelector('.sidebar-accordion-toggle[data-accordion-team="' + next + '"]');
+  if (panel) panel.classList.add('sidebar-accordion-panel--open');
+  if (toggleEl) toggleEl.setAttribute('aria-expanded', 'true');
 }
 
 function removeTeam(id) {
